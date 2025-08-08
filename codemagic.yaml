@@ -1,28 +1,27 @@
 workflows:
-  ligama-ios-build:
-    name: Build LIGAMA iOS App
+  ligama-ios:
+    name: LIGAMA iOS Build
     environment:
-      vars:
-        XCODE_WORKSPACE: "Ligama.xcworkspace" # si tu n'as pas de workspace, mets .xcodeproj
-        XCODE_SCHEME: "Ligama"
-        BUNDLE_ID: "app.ligama.ligama"
       xcode: latest
       cocoapods: default
-      flutter: false
+      vars:
+        XCODE_WORKSPACE: "Ligama.xcworkspace"
+        XCODE_SCHEME: "Ligama"
+        BUNDLE_ID: "app.ligama.ligama"
     scripts:
-      - name: Set up keychain
-        script: |
-          keychain initialize
-      - name: Install CocoaPods dependencies
+      - name: Install CocoaPods
         script: |
           pod install
+
       - name: Build IPA
         script: |
           xcode-project build-ipa \
             --workspace="$XCODE_WORKSPACE" \
             --scheme="$XCODE_SCHEME"
+
     artifacts:
       - build/ios/ipa/*.ipa
+
     publishing:
       app_store_connect:
-        auth: integration
+        auth: integration # à activer dans les settings Codemagic
