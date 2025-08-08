@@ -7,7 +7,9 @@ workflows:
       vars:
         XCODE_WORKSPACE: "Ligama.xcworkspace"
         XCODE_SCHEME: "Ligama"
-        BUNDLE_ID: "app.ligama.ligama"
+        BUNDLE_ID: "app.ligama.ligama" # modifie si nécessaire
+    integrations:
+      app_store_connect: true
     scripts:
       - name: Install CocoaPods
         script: |
@@ -24,4 +26,6 @@ workflows:
 
     publishing:
       app_store_connect:
-        auth: integration # à activer dans les settings Codemagic
+        auth: integration
+        submit_to_testflight: true
+        submit_to_app_store: false
